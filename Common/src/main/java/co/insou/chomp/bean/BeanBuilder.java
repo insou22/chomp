@@ -121,9 +121,9 @@ final class BeanBuilder<T> {
 	private Class<?>[] unwrapParameters(MethodDescription description)
 	{
 		return description.getParameters()
-					.stream()
-					.map(this::unwrapParameter)
-					.toArray(Class<?>[]::new);
+				.stream()
+				.map(this::unwrapParameter)
+				.toArray(Class<?>[]::new);
 	}
 
 	private Class<?> unwrapParameter(ParameterDescription description)
@@ -145,7 +145,8 @@ final class BeanBuilder<T> {
 	{
 		FieldInfo info = FieldInfoExtractor.from(method);
 
-		if (!this.registeredFields.contains(info)) {
+		if (!this.registeredFields.contains(info))
+		{
 			this.createField(info);
 			this.registeredFields.add(info);
 		}

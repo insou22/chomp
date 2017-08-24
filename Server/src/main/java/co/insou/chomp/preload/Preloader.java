@@ -31,13 +31,13 @@ public final class Preloader {
 		FastClasspathScanner scanner = new FastClasspathScanner();
 
 		scanner.matchClassesWithAnnotation(ChompService.class, this::loadService)
-		.scan();
+				.scan();
 
 		scanner.matchSubinterfacesOf(ServiceRequest.class, this::preloadBean)
-		.scan();
+				.scan();
 
 		scanner.matchSubinterfacesOf(ServiceResponse.class, this::preloadBean)
-		.scan();
+				.scan();
 
 		System.out.println("Finished preloading");
 	}

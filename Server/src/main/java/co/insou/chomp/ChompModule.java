@@ -9,23 +9,23 @@ import co.insou.chomp.http.HttpModule;
 
 public final class ChompModule extends AbstractModule {
 
-    static ChompModule create()
-    {
-        return new ChompModule();
-    }
+	static ChompModule create()
+	{
+		return new ChompModule();
+	}
 
-    private ChompModule()
-    {
+	private ChompModule()
+	{
 
-    }
+	}
 
-    @Override
-    protected void configure()
-    {
+	@Override
+	protected void configure()
+	{
 		this.bind(Gson.class).toInstance(GsonProvider.getGson());
 
-	    this.install(HttpModule.create());
-    }
+		this.install(HttpModule.create());
+	}
 
 	private Gson buildGson()
 	{

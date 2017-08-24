@@ -2,9 +2,9 @@ package co.insou.chomp.http;
 
 public interface UndertowConfiguration {
 
-    int getPort();
+	int getPort();
 
-    void setPort(int port);
+	void setPort(int port);
 
 	String getHostname();
 

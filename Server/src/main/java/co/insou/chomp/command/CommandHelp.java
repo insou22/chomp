@@ -23,7 +23,7 @@ public class CommandHelp implements Command {
 	@Override
 	public String[] aliases()
 	{
-		return new String[] {
+		return new String[]{
 				"h"
 		};
 	}

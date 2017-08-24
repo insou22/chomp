@@ -28,8 +28,8 @@ public enum FieldInfoExtractor {
 		return method.getReturnType() != Void.TYPE ? method.getReturnType() : method.getParameterTypes()[0];
 	}
 
-	static final class FieldInfo extends Bean
-	{
+	static final class FieldInfo extends Bean {
+
 		private final String fieldName;
 		private final Class<?> fieldType;
 

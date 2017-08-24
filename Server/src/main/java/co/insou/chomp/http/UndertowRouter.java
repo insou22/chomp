@@ -14,19 +14,19 @@ import io.undertow.server.handlers.BlockingHandler;
 
 public final class UndertowRouter {
 
-    private final Undertow undertow;
+	private final Undertow undertow;
 	private final Gson gson;
 	private final HttpRequestHandler handler;
 
 	@Inject
-    private UndertowRouter(Gson gson, HttpRequestHandler handler)
-    {
-	    this.gson = gson;
-	    this.handler = handler;
+	private UndertowRouter(Gson gson, HttpRequestHandler handler)
+	{
+		this.gson = gson;
+		this.handler = handler;
 
-        UndertowConfiguration config = this.configureUndertow();
-        this.undertow = this.buildUndertow(config);
-    }
+		UndertowConfiguration config = this.configureUndertow();
+		this.undertow = this.buildUndertow(config);
+	}
 
 	public void start()
 	{
@@ -40,24 +40,24 @@ public final class UndertowRouter {
 		System.out.println("Stopped listening for HTTP Requests");
 	}
 
-    private UndertowConfiguration configureUndertow()
-    {
-        Class<? extends UndertowConfiguration> configType = Beans.build(UndertowConfiguration.class);
+	private UndertowConfiguration configureUndertow()
+	{
+		Class<? extends UndertowConfiguration> configType = Beans.build(UndertowConfiguration.class);
 
-	    return this.gson.fromJson(this.readConfigFile(), configType);
-    }
+		return this.gson.fromJson(this.readConfigFile(), configType);
+	}
 
-    private Undertow buildUndertow(UndertowConfiguration config)
-    {
-        Builder builder = Undertow.builder();
+	private Undertow buildUndertow(UndertowConfiguration config)
+	{
+		Builder builder = Undertow.builder();
 
-	    builder.addHttpListener(config.getPort(), config.getHostname());
-	    builder.setHandler(new BlockingHandler(this.handler));
-	    builder.setIoThreads(config.getIoThreads());
-	    builder.setWorkerThreads(config.getWorkerThreads());
+		builder.addHttpListener(config.getPort(), config.getHostname());
+		builder.setHandler(new BlockingHandler(this.handler));
+		builder.setIoThreads(config.getIoThreads());
+		builder.setWorkerThreads(config.getWorkerThreads());
 
-        return builder.build();
-    }
+		return builder.build();
+	}
 
 	private JsonReader readConfigFile()
 	{

@@ -43,8 +43,8 @@ public enum Beans {
 		return builder.build();
 	}
 
-	public static final class BeanCreationException extends RuntimeException
-	{
+	public static final class BeanCreationException extends RuntimeException {
+
 		private BeanCreationException(String message)
 		{
 			super(message);

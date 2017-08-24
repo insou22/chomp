@@ -32,7 +32,7 @@ public final class CommandStop implements Command {
 	@Override
 	public String[] aliases()
 	{
-		return new String[] {
+		return new String[]{
 				"s"
 		};
 	}

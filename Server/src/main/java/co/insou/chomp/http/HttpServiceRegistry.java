@@ -31,7 +31,7 @@ public final class HttpServiceRegistry implements ServiceRegistry {
 	{
 		return (ServiceController<REQ, RES>)
 				Optional.ofNullable(this.controllers.get(endpoint.toLowerCase()))
-					.orElseThrow(() -> new ControllerRegistryNotFoundException(this.controllers, endpoint.toLowerCase()));
+						.orElseThrow(() -> new ControllerRegistryNotFoundException(this.controllers, endpoint.toLowerCase()));
 	}
 
 	@Override

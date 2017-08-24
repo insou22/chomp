@@ -17,14 +17,14 @@ public final class Chomp {
 
 	public static final AtomicBoolean RUNNING = new AtomicBoolean(false);
 
-    public static void main(String[] args)
-    {
-        Injector injector = Guice.createInjector(ChompModule.create());
+	public static void main(String[] args)
+	{
+		Injector injector = Guice.createInjector(ChompModule.create());
 
-        Chomp chomp = injector.getInstance(Chomp.class);
-	    Chomp.RUNNING.set(true);
-        chomp.start();
-    }
+		Chomp chomp = injector.getInstance(Chomp.class);
+		Chomp.RUNNING.set(true);
+		chomp.start();
+	}
 
 	public static void print(String... lines)
 	{
@@ -46,20 +46,20 @@ public final class Chomp {
 		this.preloader = preloader;
 	}
 
-    private void start()
-    {
-	    this.printMotd();
-	    this.preload();
-	    this.startUndertowRouter();
+	private void start()
+	{
+		this.printMotd();
+		this.preload();
+		this.startUndertowRouter();
 		this.listenForCommands();
-    }
+	}
 
-    public void end()
-    {
+	public void end()
+	{
 		this.router.stop();
-	    Chomp.RUNNING.set(false);
-	    Chomp.print("Successfully stopped Chomp Server.");
-    }
+		Chomp.RUNNING.set(false);
+		Chomp.print("Successfully stopped Chomp Server.");
+	}
 
 	private void preload()
 	{
@@ -80,11 +80,11 @@ public final class Chomp {
 	{
 		Chomp.print(
 				" ______     __  __     ______     __    __     ______ ",
-						"/\\  ___\\   /\\ \\_\\ \\   /\\  __ \\   /\\ \"-./  \\   /\\  == \\",
-						"\\ \\ \\____  \\ \\  __ \\  \\ \\ \\/\\ \\  \\ \\ \\-./\\ \\  \\ \\  _-/",
-						" \\ \\_____\\  \\ \\_\\ \\_\\  \\ \\_____\\  \\ \\_\\ \\ \\_\\  \\ \\_\\  ",
-						"  \\/_____/   \\/_/\\/_/   \\/_____/   \\/_/  \\/_/   \\/_/  v1.0.0",
-						""
+				"/\\  ___\\   /\\ \\_\\ \\   /\\  __ \\   /\\ \"-./  \\   /\\  == \\",
+				"\\ \\ \\____  \\ \\  __ \\  \\ \\ \\/\\ \\  \\ \\ \\-./\\ \\  \\ \\  _-/",
+				" \\ \\_____\\  \\ \\_\\ \\_\\  \\ \\_____\\  \\ \\_\\ \\ \\_\\  \\ \\_\\  ",
+				"  \\/_____/   \\/_/\\/_/   \\/_____/   \\/_/  \\/_/   \\/_/  v1.0.0",
+				""
 		);
 	}
 

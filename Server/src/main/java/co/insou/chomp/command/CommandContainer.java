@@ -17,7 +17,7 @@ final class CommandContainer {
 
 	public void loadCommands()
 	{
-		this.registerCommands(new Class[] {
+		this.registerCommands(new Class[]{
 				CommandHelp.class,
 				CommandStop.class
 		});

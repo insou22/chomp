@@ -65,8 +65,7 @@ public final class ChompClient {
 
 	public HealthResponse checkStatus()
 	{
-		if (    this.cachedHealth == null ||
-				this.cachedHealth.getLastUpdated().until(Instant.now(), ChronoUnit.SECONDS) > 10)
+		if (this.cachedHealth == null || this.cachedHealth.getLastUpdated().until(Instant.now(), ChronoUnit.SECONDS) > 10)
 		{
 			this.updateStatus();
 		}
@@ -91,45 +90,80 @@ public final class ChompClient {
 			throw new RuntimeException("Endpoint (" + endpoint + ") must begin with /");
 		}
 
-		Class<?> requestClass = request.getClass().getAnnotation(DynamicBean.class).value();
+		String body = this.buildJsonFromRequest(request);
+		HttpURLConnection connection = this.connectToEndpoint(endpoint, body.getBytes().length);
 
-		request.setType((Class<? extends ServiceCall>) requestClass);
-		request.setTimestamp(Instant.now());
-		String body = ChompClient.GSON.toJson(request);
+		this.writeRequest(connection, body);
+		JsonObject json = this.readResponse(connection);
 
-		URL url = Try.to(() -> new URL(String.format("http://%s:%d%s", this.address, this.port, endpoint)));
-		HttpURLConnection connection = this.connectToURL(url, body.getBytes().length);
+		Class<RES> responseType = this.getResponseType(json);
 
+		return ChompClient.GSON.fromJson(json, responseType);
+	}
+
+	private void writeRequest(HttpURLConnection connection, String body)
+	{
 		DataOutputStream out = new DataOutputStream(Try.to(connection::getOutputStream));
 		Try.to(() ->
 		{
 			out.writeBytes(body);
 			out.close();
 		});
+	}
 
+	private JsonObject readResponse(HttpURLConnection connection)
+	{
 		InputStream in = Try.to(connection::getInputStream);
 		String response = Try.to(() -> CharStreams.toString(new InputStreamReader(in, StandardCharsets.UTF_8)));
 
-		JsonObject json = ChompClient.GSON.fromJson(response, JsonElement.class).getAsJsonObject();
-
-		Class<RES> responseType = (Class<RES>)
-				Beans.build(Try.to(() -> Class.forName(json.get("type").getAsString())));
-
-		return ChompClient.GSON.fromJson(json, responseType);
+		return ChompClient.GSON.fromJson(response, JsonElement.class).getAsJsonObject();
 	}
 
-	private HttpURLConnection connectToURL(URL url, int bodyLength)
+	@SuppressWarnings("unchecked")
+	private <T> Class<T> getResponseType(JsonObject json)
 	{
-		HttpURLConnection connection = (HttpURLConnection) Try.to((CheckedSupplier<URLConnection>) url::openConnection);
+		return (Class<T>) Beans.build(Try.to(() -> Class.forName(json.get("type").getAsString())));
+	}
 
+	@SuppressWarnings("unchecked")
+	private String buildJsonFromRequest(ServiceRequest<?> request)
+	{
+		Class<?> requestClass = request.getClass().getAnnotation(DynamicBean.class).value();
+
+		request.setType((Class<? extends ServiceCall>) requestClass);
+		request.setTimestamp(Instant.now());
+
+		return ChompClient.GSON.toJson(request);
+	}
+
+	private URL getUrl(String endpoint)
+	{
+		return Try.to(() -> new URL(this.getUrlFormat(endpoint)));
+	}
+
+	private String getUrlFormat(String endpoint)
+	{
+		return "http://" + this.address + ":" + this.port + "/" + endpoint;
+	}
+
+	private HttpURLConnection connectToEndpoint(String endpoint, int bodyLength)
+	{
+		URL url = this.getUrl(endpoint);
+
+		HttpURLConnection connection = (HttpURLConnection) Try.to((CheckedSupplier<URLConnection>) url::openConnection);
+		this.setConnectionOptions(connection, bodyLength);
+
+		return connection;
+	}
+
+	private void setConnectionOptions(HttpURLConnection connection, int bodyLength)
+	{
 		Try.to(() -> connection.setRequestMethod(Methods.POST_STRING));
 		connection.setRequestProperty("Content-Type", "application/json");
 		connection.setRequestProperty("Content-Length", String.valueOf(bodyLength));
 
 		connection.setUseCaches(false);
 		connection.setDoOutput(true);
-
-		return connection;
 	}
 
 }

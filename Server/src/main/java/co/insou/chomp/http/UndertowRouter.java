@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import com.google.inject.Inject;
 
+import co.insou.chomp.Chomp;
 import co.insou.chomp.bean.Beans;
 import co.insou.chomp.util.except.Try;
 import io.undertow.Undertow;
@@ -31,13 +32,13 @@ public final class UndertowRouter {
 	public void start()
 	{
 		this.undertow.start();
-		System.out.println("Started listening for HTTP Requests");
+		Chomp.print("Started listening for HTTP Requests");
 	}
 
 	public void stop()
 	{
 		this.undertow.stop();
-		System.out.println("Stopped listening for HTTP Requests");
+		Chomp.print("Stopped listening for HTTP Requests");
 	}
 
 	private UndertowConfiguration configureUndertow()

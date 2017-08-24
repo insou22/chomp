@@ -15,7 +15,7 @@ import com.google.inject.Singleton;
 import co.insou.chomp.Chomp;
 
 @Singleton
-public final class CommandListener {
+public final class CommandListener extends Thread {
 
 	private final Chomp chomp;
 	private final CommandUnknown unknown;
@@ -31,10 +31,9 @@ public final class CommandListener {
 		this.containerProvider = containerProvider;
 	}
 
-	public void begin()
+	@Override
+	public void run()
 	{
-		this.containerProvider.get().loadCommands();
-
 		while (Chomp.RUNNING.get())
 		{
 			String line = this.scanner.nextLine();
@@ -48,8 +47,16 @@ public final class CommandListener {
 
 			Command command = this.commands.getOrDefault(parts[0].toLowerCase(), this.unknown);
 
-			command.execute(this.getArguments(parts));
+			this.chomp.executeTask(() -> command.execute(this.getArguments(parts)));
 		}
+		System.out.println("Finished listening for commands");
+	}
+
+	public void begin()
+	{
+		this.containerProvider.get().loadCommands();
+
+		this.start();
 	}
 
 	private List<String> getArguments(String[] parts)

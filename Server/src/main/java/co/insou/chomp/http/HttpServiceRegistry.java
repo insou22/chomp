@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import co.insou.chomp.Chomp;
 import co.insou.chomp.service.ControllerRegistryNotFoundException;
 import co.insou.chomp.service.ServiceController;
 import co.insou.chomp.service.ServiceRegistry;
@@ -43,6 +44,8 @@ public final class HttpServiceRegistry implements ServiceRegistry {
 		}
 
 		this.controllers.put(controller.endpoint().toLowerCase(), controller);
+
+		Chomp.print("Registered endpoint " + controller.endpoint() + " to controller " + controller.getClass());
 	}
 
 

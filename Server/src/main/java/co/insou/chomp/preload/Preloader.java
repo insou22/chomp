@@ -6,6 +6,7 @@ import java.util.Set;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
+import co.insou.chomp.Chomp;
 import co.insou.chomp.bean.Beans;
 import co.insou.chomp.service.ChompService;
 import co.insou.chomp.service.ServiceRequest;
@@ -26,27 +27,22 @@ public final class Preloader {
 
 	public void preload()
 	{
-		System.out.println("Preloading Chomp Services...");
+		Chomp.print("Preloading Chomp Services...");
 
-		FastClasspathScanner scanner = new FastClasspathScanner();
-
-		scanner.matchClassesWithAnnotation(ChompService.class, this::loadService)
+		new FastClasspathScanner()
+				.matchClassesWithAnnotation(ChompService.class, this::loadService)
+				.matchSubinterfacesOf(ServiceRequest.class, this::preloadBean)
+				.matchSubinterfacesOf(ServiceResponse.class, this::preloadBean)
 				.scan();
 
-		scanner.matchSubinterfacesOf(ServiceRequest.class, this::preloadBean)
-				.scan();
-
-		scanner.matchSubinterfacesOf(ServiceResponse.class, this::preloadBean)
-				.scan();
-
-		System.out.println("Finished preloading");
+		Chomp.print("Finished preloading");
 	}
 
 	private void loadService(Class<?> service)
 	{
 		if (this.preloadedServices.add(service))
 		{
-			System.out.println("Preloading Service " + service);
+			Chomp.print("Preloading Service " + service);
 			this.injector.getInstance(service);
 		}
 	}
@@ -55,7 +51,7 @@ public final class Preloader {
 	{
 		if (this.preloadedBeans.add(beanClass))
 		{
-			System.out.println("Preloading Bean " + beanClass);
+			Chomp.print("Preloading Bean " + beanClass);
 			Beans.create(beanClass);
 		}
 	}

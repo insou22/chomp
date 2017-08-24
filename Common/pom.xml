@@ -10,7 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>chomp-api</artifactId>
+    <artifactId>chomp-common</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 

@@ -29,4 +29,12 @@ public final class CommandStop implements Command {
 		return "stop";
 	}
 
+	@Override
+	public String[] aliases()
+	{
+		return new String[] {
+				"s"
+		};
+	}
+
 }

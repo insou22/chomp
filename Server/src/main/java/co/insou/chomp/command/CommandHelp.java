@@ -9,18 +9,9 @@ public class CommandHelp implements Command {
 	@Override
 	public void execute(List<String> arguments)
 	{
-		Chomp.print("=========================");
-		Chomp.print("|                       |");
-		Chomp.print("|    Chomp Webserver    |");
-		Chomp.print("|                       |");
-		Chomp.print("=========================");
-		Chomp.print("");
 		Chomp.print("Commands:");
-		Chomp.print("=> help (h)");
-		Chomp.print("===> Display this help page");
-		Chomp.print("");
-		Chomp.print("=> stop");
-		Chomp.print("===> Stop the Chomp Webserver");
+		Chomp.print("- help (h): Display this help page");
+		Chomp.print("- stop (s): Stop the Chomp Webserver");
 	}
 
 	@Override

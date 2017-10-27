@@ -143,7 +143,7 @@ public final class ChompClient {
 
 	private String getUrlFormat(String endpoint)
 	{
-		return "http://" + this.address + ":" + this.port + "/" + endpoint;
+		return "http://" + this.address + ":" + this.port + endpoint;
 	}
 
 	private HttpURLConnection connectToEndpoint(String endpoint, int bodyLength)

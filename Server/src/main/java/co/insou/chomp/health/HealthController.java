@@ -17,7 +17,9 @@ public class HealthController implements ServiceController<HealthRequest, Health
 	{
 		HealthResponse response = Beans.create(HealthResponse.class);
 
-		response.setCpuLoad(this.os.getSystemCpuLoad());
+		double cpuLoad = this.os.getSystemCpuLoad();
+		response.setCpuLoad(Double.isNaN(cpuLoad) ? -1D : cpuLoad);
+
 		response.setTotalMemory(this.os.getTotalPhysicalMemorySize());
 		response.setUsedMemory(this.os.getCommittedVirtualMemorySize());
 		response.setLastUpdated(Instant.now());

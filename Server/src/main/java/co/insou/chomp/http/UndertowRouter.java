@@ -32,14 +32,17 @@ public final class UndertowRouter {
 
 	public void start()
 	{
+		Chomp.print("Launching HTTP server...\n");
 		this.undertow.start();
-		Chomp.print("Started listening for HTTP Requests");
+		this.printBlankLine();
+		Chomp.print("Successfully launched HTTP server");
 	}
 
 	public void stop()
 	{
+		Chomp.print("Shutting down HTTP server...");
 		this.undertow.stop();
-		Chomp.print("Stopped listening for HTTP Requests");
+		Chomp.print("Successfully shut down HTTP server.");
 	}
 
 	private UndertowConfiguration configureUndertow()
@@ -64,6 +67,11 @@ public final class UndertowRouter {
 	private JsonReader readConfigFile()
 	{
 		return new JsonReader(Try.to(() -> new FileReader("config.json")));
+	}
+
+	private void printBlankLine()
+	{
+		System.out.println();
 	}
 
 }

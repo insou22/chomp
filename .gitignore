@@ -87,6 +87,8 @@ Temporary Items
 .idea/vcs.xml
 .idea/jsLibraryMappings.xml
 
+*.iml
+
 # Sensitive or high-churn files:
 .idea/dataSources.ids
 .idea/dataSources.xml
@@ -101,8 +103,6 @@ Temporary Items
 
 # Mongo Explorer plugin:
 .idea/mongoSettings.xml
-
-*.iml
 
 ## File-based project format:
 *.iws

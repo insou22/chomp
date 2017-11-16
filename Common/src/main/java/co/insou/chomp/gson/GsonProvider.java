@@ -13,7 +13,7 @@ public enum GsonProvider {
 	{
 		GSON = new GsonBuilder()
 				.registerTypeAdapterFactory(new ClassTypeAdapterFactory())
-				.registerTypeAdapter(Class.class, new ClassTypeAdapter())
+				.registerTypeAdapterFactory(new BeanFactory())
 				.create();
 	}
 

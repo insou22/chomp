@@ -31,9 +31,26 @@ public enum Beans {
 
 	public static <T> T create(Class<T> clazz)
 	{
+		if (clazz.isAnnotationPresent(DynamicBean.class))
+		{
+			return InstanceUtils.createOrNull(clazz);
+		}
+
 		Class<? extends T> implementation = Beans.build(clazz);
 
 		return InstanceUtils.createOrNull(implementation);
+	}
+
+	public static <T> Class<? extends T> attemptToBuild(Class<T> type)
+	{
+		try
+		{
+			return Beans.build(type);
+		}
+		catch (BeanCreationException exception)
+		{
+			return null;
+		}
 	}
 
 	private static <T> Class<? extends T> bindToImplementation(Class<T> binding)

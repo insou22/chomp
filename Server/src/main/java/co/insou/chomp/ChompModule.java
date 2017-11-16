@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.inject.AbstractModule;
 
+import co.insou.chomp.data.DataModule;
 import co.insou.chomp.gson.GsonProvider;
 import co.insou.chomp.http.HttpModule;
 
@@ -25,6 +26,7 @@ public final class ChompModule extends AbstractModule {
 		this.bind(Gson.class).toInstance(GsonProvider.getGson());
 
 		this.install(HttpModule.create());
+		this.install(DataModule.create());
 	}
 
 	private Gson buildGson()

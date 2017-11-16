@@ -7,20 +7,29 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 
+import co.insou.chomp.bean.Beans;
+import co.insou.chomp.bean.DynamicBean;
 import co.insou.chomp.util.except.Try;
 
-public class ClassTypeAdapter extends TypeAdapter<Class<?>> {
+class ClassTypeAdapter extends TypeAdapter<Class<?>> {
 
 	@Override
-	public void write(JsonWriter jsonWriter, Class<?> clazz) throws IOException
+	public void write(JsonWriter jsonWriter, Class<?> type) throws IOException
 	{
-		if (clazz == null)
+		if (type == null)
 		{
 			jsonWriter.nullValue();
 			return;
 		}
 
-		jsonWriter.value(clazz.getName());
+		if (type.isAnnotationPresent(DynamicBean.class))
+		{
+			jsonWriter.value(type.getAnnotation(DynamicBean.class).value().getName());
+		}
+		else
+		{
+			jsonWriter.value(type.getName());
+		}
 	}
 
 	@Override
@@ -32,7 +41,25 @@ public class ClassTypeAdapter extends TypeAdapter<Class<?>> {
 			return null;
 		}
 
-		return Try.to(() -> Class.forName(jsonReader.nextString()));
+		Class<?> type = this.fromName(jsonReader.nextString());
+
+		if (type.isInterface())
+		{
+			Class<?> implementedBean = Beans.attemptToBuild(type);
+
+			if (implementedBean != null)
+			{
+				return implementedBean;
+			}
+		}
+
+		return type;
 	}
+
+	private Class<?> fromName(String typeName)
+	{
+		return Try.to(() -> Class.forName(typeName));
+	}
+
 }
 

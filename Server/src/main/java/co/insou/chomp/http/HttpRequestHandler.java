@@ -58,10 +58,12 @@ public class HttpRequestHandler implements HttpHandler {
 
 		JsonObject json = this.gson.fromJson(body, JsonElement.class).getAsJsonObject();
 
+		String type = json.get("type").getAsString().replace("\"", "");
+
 		return this.gson.fromJson(
 				json,
 				Beans.create(Try.to(() ->
-						(Class<ServiceRequest>) Class.forName(json.get("type").getAsString()))
+						(Class<ServiceRequest>) Class.forName(type))
 				).getClass()
 		);
 	}

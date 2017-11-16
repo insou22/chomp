@@ -2,7 +2,8 @@ package co.insou.chomp;
 
 import java.util.DoubleSummaryStatistics;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import com.google.common.base.Stopwatch;
 
@@ -28,6 +29,14 @@ public class TestClient {
 
 		System.out.println("=== RUNNING ===");
 
+		HealthRequest request = Beans.create(HealthRequest.class);
+		HealthResponse response = client.process(ServiceRequest.emptyRequest(HealthRequest.class), "/health");
+
+		System.out.println("RESPONSE:");
+		System.out.println(ReflectionToStringBuilder.reflectionToString(response));
+
+		if (true) return;/*
+
 		while (true)
 		{
 			stopwatch.reset();
@@ -40,7 +49,7 @@ public class TestClient {
 			times++;
 
 			System.out.print("\rAverage: " + (nanos / (times * 1000)) + "us ; Executions: " + times);
-		}
+		}*/
 	}
 
 }

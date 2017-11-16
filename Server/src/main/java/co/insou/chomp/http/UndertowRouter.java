@@ -8,6 +8,8 @@ import com.google.inject.Inject;
 
 import co.insou.chomp.Chomp;
 import co.insou.chomp.bean.Beans;
+import co.insou.chomp.config.ChompConfiguration;
+import co.insou.chomp.config.UndertowConfiguration;
 import co.insou.chomp.util.except.Try;
 import io.undertow.Undertow;
 import io.undertow.Undertow.Builder;
@@ -20,13 +22,12 @@ public final class UndertowRouter {
 	private final HttpRequestHandler handler;
 
 	@Inject
-	private UndertowRouter(Gson gson, HttpRequestHandler handler)
+	private UndertowRouter(Gson gson, HttpRequestHandler handler, ChompConfiguration config)
 	{
 		this.gson = gson;
 		this.handler = handler;
 
-		UndertowConfiguration config = this.configureUndertow();
-		this.undertow = this.buildUndertow(config);
+		this.undertow = this.buildUndertow(config.getHttp());
 	}
 
 	public void start()

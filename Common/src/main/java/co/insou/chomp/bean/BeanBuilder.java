@@ -135,8 +135,7 @@ final class BeanBuilder<T> {
 	{
 		this.ensureFieldCreated(method);
 
-		this.builder =
-				this.builder.method(ElementMatchers.is(method))
+		this.builder = this.builder.method(ElementMatchers.is(method))
 						.intercept(FieldAccessor.ofBeanProperty())
 						.annotateMethod(method.getDeclaredAnnotations());
 	}

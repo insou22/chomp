@@ -24,6 +24,11 @@ public class HealthController implements ServiceController<HealthRequest, Health
 		response.setUsedMemory(this.os.getCommittedVirtualMemorySize());
 		response.setLastUpdated(Instant.now());
 
+		UselessBean useless = Beans.create(UselessBean.class);
+		useless.setImGay("I'm motherfucking gay");
+		useless.setInts(new int[]{6, 9, 4, 2 ,0});
+		response.setUselessBean(useless);
+
 		return response;
 	}
 

@@ -7,23 +7,18 @@ import com.google.gson.reflect.TypeToken;
 
 import co.insou.chomp.bean.DynamicBean;
 
-class ClassTypeAdapterFactory implements TypeAdapterFactory {
+class BeanFactory implements TypeAdapterFactory {
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> typeToken)
 	{
-		if (!this.isBean(typeToken.getRawType()) && !Class.class.isAssignableFrom(typeToken.getRawType()))
+		if (!typeToken.getRawType().isInterface() && !typeToken.getRawType().isAnnotationPresent(DynamicBean.class))
 		{
 			return null;
 		}
 
-		return (TypeAdapter<T>) new ClassTypeAdapter();
-	}
-
-	private boolean isBean(Class<?> type)
-	{
-		return type.isInterface() || type.isAnnotationPresent(DynamicBean.class);
+		return (TypeAdapter<T>) new BeanAdapter(typeToken);
 	}
 
 }

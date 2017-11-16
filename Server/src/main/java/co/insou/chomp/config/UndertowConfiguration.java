@@ -1,4 +1,4 @@
-package co.insou.chomp.http;
+package co.insou.chomp.config;
 
 public interface UndertowConfiguration {
 

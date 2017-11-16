@@ -22,4 +22,8 @@ public interface HealthResponse extends ServiceResponse<HealthRequest> {
 
 	void setLastUpdated(Instant lastUpdated);
 
+	UselessBean getUselessBean();
+
+	void setUselessBean(UselessBean uselessBean);
+
 }

@@ -8,7 +8,7 @@ import co.insou.chomp.data.DataModule;
 import co.insou.chomp.gson.GsonProvider;
 import co.insou.chomp.http.HttpModule;
 
-public final class ChompModule extends AbstractModule {
+final class ChompModule extends AbstractModule {
 
 	static ChompModule create()
 	{

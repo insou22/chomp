@@ -1,6 +1,7 @@
 package co.insou.chomp.command;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,10 +64,10 @@ public final class CommandListener extends Thread {
 	{
 		List<String> arguments = new ArrayList<>();
 
-		for (int i = 1; i < parts.length; i++)
-		{
-			arguments.add(parts[i]);
-		}
+		arguments.addAll(
+				Arrays.asList(parts)
+						.subList(1, parts.length)
+		);
 
 		return arguments;
 	}

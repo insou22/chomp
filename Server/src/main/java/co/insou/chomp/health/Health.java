@@ -6,7 +6,7 @@ import co.insou.chomp.service.ChompService;
 import co.insou.chomp.service.ServiceRegistry;
 
 @ChompService
-public final class Health {
+final class Health {
 
 	@Inject
 	private Health(ServiceRegistry registry, HealthController controller)

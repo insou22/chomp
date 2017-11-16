@@ -22,7 +22,7 @@ import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
 import io.undertow.util.Headers;
 
-public class HttpRequestHandler implements HttpHandler {
+class HttpRequestHandler implements HttpHandler {
 
 	private final ServiceRegistry registry;
 	private final Gson gson;

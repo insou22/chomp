@@ -65,7 +65,7 @@ public final class ChompClient {
 
 	public HealthResponse checkStatus()
 	{
-		if (this.cachedHealth == null || this.cachedHealth.getLastUpdated().until(Instant.now(), ChronoUnit.SECONDS) > 10)
+		if (this.cachedHealth == null || this.cachedHealth.getTimestamp().until(Instant.now(), ChronoUnit.SECONDS) > 10)
 		{
 			this.updateStatus();
 		}

@@ -1,7 +1,6 @@
 package co.insou.chomp.health;
 
 import java.lang.management.ManagementFactory;
-import java.time.Instant;
 
 import com.sun.management.OperatingSystemMXBean;
 
@@ -22,12 +21,6 @@ public class HealthController implements ServiceController<HealthRequest, Health
 
 		response.setTotalMemory(this.os.getTotalPhysicalMemorySize());
 		response.setUsedMemory(this.os.getCommittedVirtualMemorySize());
-		response.setLastUpdated(Instant.now());
-
-		UselessBean useless = Beans.create(UselessBean.class);
-		useless.setImGay("I'm motherfucking gay");
-		useless.setInts(new int[]{6, 9, 4, 2 ,0});
-		response.setUselessBean(useless);
 
 		return response;
 	}

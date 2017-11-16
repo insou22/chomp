@@ -18,12 +18,4 @@ public interface HealthResponse extends ServiceResponse<HealthRequest> {
 
 	void setUsedMemory(double usedMemory);
 
-	Instant getLastUpdated();
-
-	void setLastUpdated(Instant lastUpdated);
-
-	UselessBean getUselessBean();
-
-	void setUselessBean(UselessBean uselessBean);
-
 }

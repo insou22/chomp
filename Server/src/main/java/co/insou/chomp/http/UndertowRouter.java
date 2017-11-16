@@ -1,6 +1,5 @@
 package co.insou.chomp.http;
 
-import com.google.gson.Gson;
 import com.google.inject.Inject;
 
 import co.insou.chomp.Chomp;
@@ -13,13 +12,11 @@ import io.undertow.server.handlers.BlockingHandler;
 public final class UndertowRouter {
 
 	private final Undertow undertow;
-	private final Gson gson;
 	private final HttpRequestHandler handler;
 
 	@Inject
-	private UndertowRouter(Gson gson, HttpRequestHandler handler, ChompConfiguration config)
+	private UndertowRouter(HttpRequestHandler handler, ChompConfiguration config)
 	{
-		this.gson = gson;
 		this.handler = handler;
 
 		this.undertow = this.buildUndertow(config.getHttp());

@@ -10,11 +10,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
-import com.google.common.io.CharStreams;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
 import co.insou.chomp.bean.Beans;
 import co.insou.chomp.bean.DynamicBean;
 import co.insou.chomp.gson.GsonProvider;
@@ -25,11 +20,15 @@ import co.insou.chomp.service.ServiceRequest;
 import co.insou.chomp.service.ServiceResponse;
 import co.insou.chomp.util.except.CheckedSupplier;
 import co.insou.chomp.util.except.Try;
-import io.undertow.util.Methods;
+import com.google.common.io.CharStreams;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 public final class ChompClient {
 
 	private static final Gson GSON = GsonProvider.getGson();
+	private static final String POST = "POST";
 
 	public static ChompClient fromDefaults()
 	{
@@ -158,7 +157,7 @@ public final class ChompClient {
 
 	private void setConnectionOptions(HttpURLConnection connection, int bodyLength)
 	{
-		Try.to(() -> connection.setRequestMethod(Methods.POST_STRING));
+		Try.to(() -> connection.setRequestMethod(ChompClient.POST));
 		connection.setRequestProperty("Content-Type", "application/json");
 		connection.setRequestProperty("Content-Length", String.valueOf(bodyLength));
 

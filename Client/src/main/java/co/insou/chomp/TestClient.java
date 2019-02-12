@@ -1,7 +1,5 @@
 package co.insou.chomp;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-
 import co.insou.chomp.bean.Beans;
 import co.insou.chomp.health.HealthRequest;
 import co.insou.chomp.health.HealthResponse;
@@ -18,7 +16,10 @@ public class TestClient {
 		HealthResponse response = client.process(request, "/health");
 
 		System.out.println("RESPONSE:");
-		System.out.println(ReflectionToStringBuilder.reflectionToString(response));
+		System.out.println("CPU Load: " + response.getCpuLoad());
+		System.out.println("Total Memory: " + response.getTotalMemory());
+		System.out.println("Used Memory: " + response.getUsedMemory());
+		System.out.println("Hello: " + response.getHelloBean().getHello());
 	}
 
 }

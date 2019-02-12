@@ -22,6 +22,11 @@ public class HealthController implements ServiceController<HealthRequest, Health
 		response.setTotalMemory(this.os.getTotalPhysicalMemorySize());
 		response.setUsedMemory(this.os.getCommittedVirtualMemorySize());
 
+		HelloBean bean = Beans.create(HelloBean.class);
+		bean.setHello("Hello, World!");
+
+		response.setHelloBean(bean);
+
 		return response;
 	}
 

@@ -1,7 +1,5 @@
 package co.insou.chomp.health;
 
-import java.time.Instant;
-
 import co.insou.chomp.service.ServiceResponse;
 
 public interface HealthResponse extends ServiceResponse<HealthRequest> {
@@ -17,5 +15,9 @@ public interface HealthResponse extends ServiceResponse<HealthRequest> {
 	double getUsedMemory();
 
 	void setUsedMemory(double usedMemory);
+
+	HelloBean getHelloBean();
+
+	void setHelloBean(HelloBean bean);
 
 }

@@ -121,7 +121,7 @@ public final class ChompClient {
 	@SuppressWarnings("unchecked")
 	private <T> Class<T> getResponseType(JsonObject json)
 	{
-		return (Class<T>) Beans.build(Try.to(() -> Class.forName(json.get("type").getAsString().replace("\"", ""))));
+		return (Class<T>) Beans.build(Try.to(() -> Class.forName(json.get("type").getAsString())));
 	}
 
 	@SuppressWarnings("unchecked")

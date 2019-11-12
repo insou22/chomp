@@ -24,11 +24,11 @@ class ClassTypeAdapter extends TypeAdapter<Class<?>> {
 
 		if (type.isAnnotationPresent(DynamicBean.class))
 		{
-			jsonWriter.value(type.getAnnotation(DynamicBean.class).value().getName());
+			jsonWriter.jsonValue(type.getAnnotation(DynamicBean.class).value().getName());
 		}
 		else
 		{
-			jsonWriter.value(type.getName());
+			jsonWriter.jsonValue(type.getName());
 		}
 	}
 

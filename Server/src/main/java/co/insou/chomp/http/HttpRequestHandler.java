@@ -58,7 +58,7 @@ class HttpRequestHandler implements HttpHandler {
 
 		JsonObject json = this.gson.fromJson(body, JsonElement.class).getAsJsonObject();
 
-		String type = json.get("type").getAsString().replace("\"", "");
+		String type = json.get("type").getAsString();
 
 		return this.gson.fromJson(
 				json,
